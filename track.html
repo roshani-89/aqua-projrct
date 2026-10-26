@@ -29,24 +29,10 @@
         <ul class="navbar-nav ms-auto align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="services.html">Services & Pricing</a></li>
-          <li class="nav-item"><a class="nav-link active" href="track.html">Track Status</a></li>
+          <li class="nav-item auth-only" style="display: none;"><a class="nav-link" href="booking.html">Book Service</a></li>
+          <li class="nav-item auth-only" style="display: none;"><a class="nav-link active" href="track.html">Track Status</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#about">About Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
-          <li class="nav-item ms-lg-2" id="navAuthItem">
-            <a href="login.html" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1">
-              <i class="bi bi-box-arrow-in-right"></i> Login
-            </a>
-          </li>
-          <li class="nav-item ms-lg-2">
-            <a href="admin.html" class="btn btn-sm btn-outline-secondary d-none d-lg-inline-flex align-items-center gap-1" title="Admin Portal">
-              <i class="bi bi-shield-lock"></i> Admin
-            </a>
-          </li>
-          <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-            <a href="booking.html" class="btn btn-aqua w-100">
-              <i class="bi bi-calendar2-check me-1"></i> Book Service
-            </a>
-          </li>
         </ul>
       </div>
     </div>
@@ -61,8 +47,29 @@
         Check real-time status of your water purifier repair, assigned technician details, and scheduled visit time.
       </p>
 
-      <!-- Search Box -->
-      <div class="row justify-content-center mt-4">
+      <!-- Guest Gatekeeper -->
+      <div class="guest-only text-center mt-4">
+        <div class="card border-0 shadow-md p-4 rounded-4 mx-auto bg-white" style="max-width: 550px;">
+          <div class="bg-primary-subtle text-primary rounded-circle d-inline-flex p-3 fs-2 mx-auto mb-2">
+            <i class="bi bi-person-lock"></i>
+          </div>
+          <h5 class="fw-bold text-dark mb-1">Account Login Required</h5>
+          <p class="text-muted small mb-3">
+            Please log in or register to access real-time technician arrival tracking and service records.
+          </p>
+          <div class="d-flex justify-content-center gap-2">
+            <a href="login.html?redirect=track.html" class="btn btn-aqua px-4 fw-semibold">
+              <i class="bi bi-box-arrow-in-right me-1"></i> Log In
+            </a>
+            <a href="register.html" class="btn btn-outline-primary px-3 fw-semibold">
+              <i class="bi bi-person-plus me-1"></i> Register
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Authenticated Search Box -->
+      <div class="auth-only row justify-content-center mt-4" style="display: none;">
         <div class="col-lg-7">
           <form id="trackSearchForm" onsubmit="handleTrackSearch(event)" class="d-flex gap-2 p-2 bg-white rounded-4 shadow-md">
             <div class="input-group">
@@ -87,7 +94,7 @@
   </div>
 
   <!-- Status Result Section -->
-  <section class="py-5">
+  <section class="py-5 auth-only" style="display: none;">
     <div class="container">
       <div id="noResultBox" class="text-center py-5 no-print" style="display: none;">
         <i class="bi bi-search text-muted display-3 mb-3"></i>

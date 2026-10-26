@@ -29,24 +29,10 @@
         <ul class="navbar-nav ms-auto align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link active" href="services.html">Services & Pricing</a></li>
-          <li class="nav-item"><a class="nav-link" href="track.html">Track Status</a></li>
+          <li class="nav-item auth-only" style="display: none;"><a class="nav-link" href="booking.html">Book Service</a></li>
+          <li class="nav-item auth-only" style="display: none;"><a class="nav-link" href="track.html">Track Status</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#about">About Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
-          <li class="nav-item ms-lg-2" id="navAuthItem">
-            <a href="login.html" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1">
-              <i class="bi bi-box-arrow-in-right"></i> Login
-            </a>
-          </li>
-          <li class="nav-item ms-lg-2">
-            <a href="admin.html" class="btn btn-sm btn-outline-secondary d-none d-lg-inline-flex align-items-center gap-1" title="Admin Portal">
-              <i class="bi bi-shield-lock"></i> Admin
-            </a>
-          </li>
-          <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-            <a href="booking.html" class="btn btn-aqua w-100">
-              <i class="bi bi-calendar2-check me-1"></i> Book Service
-            </a>
-          </li>
         </ul>
       </div>
     </div>
@@ -286,14 +272,19 @@
                   <span class="service-price">₹${service.price}</span>
                   <span class="text-decoration-line-through text-muted small ms-1">₹${service.originalPrice}</span>
                 </div>
-                <a href="booking.html?service=${service.id}" class="btn btn-aqua">
+                <button onclick="handleServiceBookClick('${service.id}')" class="btn btn-aqua">
                   Book Service <i class="bi bi-calendar2-plus ms-1"></i>
-                </a>
+                </button>
               </div>
             </div>
           </div>
         </div>
       `).join('');
+    }
+
+    function handleServiceBookClick(serviceId) {
+      if (!checkAuthBeforeBooking(serviceId)) return;
+      window.location.href = `booking.html?service=${serviceId}`;
     }
 
     function filterServices(category) {

@@ -33,24 +33,10 @@
         <ul class="navbar-nav ms-auto align-items-lg-center">
           <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="services.html">Services & Pricing</a></li>
-          <li class="nav-item"><a class="nav-link" href="track.html">Track Status</a></li>
+          <li class="nav-item auth-only" style="display: none;"><a class="nav-link" href="booking.html">Book Service</a></li>
+          <li class="nav-item auth-only" style="display: none;"><a class="nav-link" href="track.html">Track Status</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
-          <li class="nav-item ms-lg-2" id="navAuthItem">
-            <a href="login.html" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1">
-              <i class="bi bi-box-arrow-in-right"></i> Login
-            </a>
-          </li>
-          <li class="nav-item ms-lg-2">
-            <a href="admin.html" class="btn btn-sm btn-outline-secondary d-none d-lg-inline-flex align-items-center gap-1" title="Admin Portal">
-              <i class="bi bi-shield-lock"></i> Admin
-            </a>
-          </li>
-          <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-            <a href="booking.html" class="btn btn-aqua w-100">
-              <i class="bi bi-calendar2-check me-1"></i> Book Service
-            </a>
-          </li>
         </ul>
       </div>
     </div>
@@ -71,13 +57,32 @@
           <p class="hero-subtitle">
             Say goodbye to unreliable local technicians. AquaCare connects you to certified RO purifier repair, genuine filter replacements, and deep tank cleaning with transparent pricing and live status tracking.
           </p>
-          <div class="d-flex flex-wrap gap-3">
-            <a href="booking.html" class="btn btn-aqua btn-lg px-4">
-              <i class="bi bi-calendar-check me-2"></i> Book a Service Now
-            </a>
-            <a href="track.html" class="btn btn-aqua-outline btn-lg px-4">
-              <i class="bi bi-geo-alt me-2"></i> Track Service Status
-            </a>
+
+          <!-- Guest Call-to-actions -->
+          <div class="guest-only">
+            <div class="d-flex flex-wrap gap-3">
+              <a href="#services" class="btn btn-aqua btn-lg px-4">
+                <i class="bi bi-grid-fill me-2"></i> Explore Services & Rates
+              </a>
+              <a href="login.html" class="btn btn-aqua-outline btn-lg px-4">
+                <i class="bi bi-box-arrow-in-right me-2"></i> Log In / Register
+              </a>
+            </div>
+            <div class="mt-3 text-muted small">
+              <i class="bi bi-info-circle text-primary me-1"></i> Log in to schedule doorstep visits & track your technician in real time.
+            </div>
+          </div>
+
+          <!-- Authenticated Member Actions -->
+          <div class="auth-only" style="display: none;">
+            <div class="d-flex flex-wrap gap-3">
+              <a href="booking.html" class="btn btn-aqua btn-lg px-4">
+                <i class="bi bi-calendar-check me-2"></i> Book a Service Now
+              </a>
+              <a href="track.html" class="btn btn-aqua-outline btn-lg px-4">
+                <i class="bi bi-geo-alt me-2"></i> Track Service Status
+              </a>
+            </div>
           </div>
 
           <!-- Quick Stats / Highlights -->
@@ -98,53 +103,79 @@
         </div>
 
         <div class="col-lg-5">
-          <!-- Quick Booking Card inside Hero -->
-          <div class="floating-card">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <h4 class="fw-bold mb-0 text-dark">Quick Service Booking</h4>
-              <span class="badge bg-primary-subtle text-primary fw-semibold px-2 py-1">Instant Slot</span>
+          <!-- Guest Introduction Card -->
+          <div class="guest-only">
+            <div class="floating-card text-center p-4">
+              <div class="bg-primary-subtle text-primary p-3 rounded-circle d-inline-flex fs-1 mb-3">
+                <i class="bi bi-droplet-half"></i>
+              </div>
+              <h4 class="fw-bold text-dark mb-2">Welcome to AquaCare</h4>
+              <p class="text-muted small mb-4">
+                India's modern online water service booking website. Browse services, check transparent prices, and log in to schedule certified technicians in 60 seconds.
+              </p>
+              <div class="d-grid gap-2 mb-3">
+                <a href="login.html?redirect=booking.html" class="btn btn-aqua py-2 fw-semibold">
+                  <i class="bi bi-box-arrow-in-right me-1"></i> Log In to Book Service
+                </a>
+                <a href="register.html" class="btn btn-outline-primary py-2 fw-semibold">
+                  <i class="bi bi-person-plus me-1"></i> Create Free Account
+                </a>
+              </div>
+              <div class="text-muted small">
+                <i class="bi bi-shield-check text-success"></i> Fixed Rates • 30-Day Free Warranty
+              </div>
             </div>
-            <p class="text-muted small mb-4">Select your required water service and schedule technician visit in 60 seconds.</p>
-            
-            <form id="heroQuickBookForm">
-              <div class="mb-3">
-                <label class="form-label">Select Water Service</label>
-                <select class="form-select" id="quickServiceSelect" required>
-                  <option value="" selected disabled>Choose a service...</option>
-                  <option value="ro-repair" data-price="399">RO Water Purifier Repair (₹399)</option>
-                  <option value="filter-replacement" data-price="1299">Complete Filter Replacement (₹1,299)</option>
-                  <option value="ro-installation" data-price="549">RO Installation / Uninstallation (₹549)</option>
-                  <option value="tank-cleaning" data-price="899">Water Tank Deep Cleaning (₹899)</option>
-                  <option value="annual-maintenance" data-price="2499">AquaCare Annual Maintenance AMC (₹2,499)</option>
-                  <option value="water-quality-test" data-price="199">Water Quality & TDS Lab Testing (₹199)</option>
-                </select>
-              </div>
+          </div>
 
-              <div class="mb-3">
-                <label class="form-label">Your Mobile Number</label>
-                <div class="input-group">
-                  <span class="input-group-text bg-white text-muted">+91</span>
-                  <input type="tel" class="form-control" id="quickPhone" placeholder="Enter 10-digit number" pattern="[0-9]{10}" required>
+          <!-- Authenticated Quick Booking Card -->
+          <div class="auth-only" style="display: none;">
+            <div class="floating-card">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h4 class="fw-bold mb-0 text-dark">Quick Service Booking</h4>
+                <span class="badge bg-primary-subtle text-primary fw-semibold px-2 py-1">Instant Slot</span>
+              </div>
+              <p class="text-muted small mb-4">Select your required water service and schedule technician visit in 60 seconds.</p>
+              
+              <form id="heroQuickBookForm">
+                <div class="mb-3">
+                  <label class="form-label">Select Water Service</label>
+                  <select class="form-select" id="quickServiceSelect" required>
+                    <option value="" selected disabled>Choose a service...</option>
+                    <option value="ro-repair" data-price="399">RO Water Purifier Repair (₹399)</option>
+                    <option value="filter-replacement" data-price="1299">Complete Filter Replacement (₹1,299)</option>
+                    <option value="ro-installation" data-price="549">RO Installation / Uninstallation (₹549)</option>
+                    <option value="tank-cleaning" data-price="899">Water Tank Deep Cleaning (₹899)</option>
+                    <option value="annual-maintenance" data-price="2499">AquaCare Annual Maintenance AMC (₹2,499)</option>
+                    <option value="water-quality-test" data-price="199">Water Quality & TDS Lab Testing (₹199)</option>
+                  </select>
                 </div>
-              </div>
 
-              <div class="mb-4">
-                <label class="form-label">City / Locality</label>
-                <div class="input-group">
-                  <span class="input-group-text bg-white text-muted"><i class="bi bi-geo-alt"></i></span>
-                  <input type="text" class="form-control" id="quickCity" placeholder="e.g. Pune, Bangalore, Mumbai..." required>
+                <div class="mb-3">
+                  <label class="form-label">Your Mobile Number</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white text-muted">+91</span>
+                    <input type="tel" class="form-control" id="quickPhone" placeholder="Enter 10-digit number" pattern="[0-9]{10}" required>
+                  </div>
                 </div>
+
+                <div class="mb-4">
+                  <label class="form-label">City / Locality</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white text-muted"><i class="bi bi-geo-alt"></i></span>
+                    <input type="text" class="form-control" id="quickCity" placeholder="e.g. Pune, Bangalore, Mumbai..." required>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-aqua w-100 py-2">
+                  Continue to Book Slot <i class="bi bi-arrow-right ms-1"></i>
+                </button>
+              </form>
+
+              <div class="text-center mt-3">
+                <span class="text-muted small">
+                  <i class="bi bi-shield-check text-success"></i> Fixed Pricing & No Hidden Charges
+                </span>
               </div>
-
-              <button type="submit" class="btn btn-aqua w-100 py-2">
-                Continue to Book Slot <i class="bi bi-arrow-right ms-1"></i>
-              </button>
-            </form>
-
-            <div class="text-center mt-3">
-              <span class="text-muted small">
-                <i class="bi bi-shield-check text-success"></i> Fixed Pricing & No Hidden Charges
-              </span>
             </div>
           </div>
         </div>
@@ -168,17 +199,27 @@
           </div>
         </div>
         <div class="col-md-6 col-lg-6">
-          <form class="d-flex gap-2" onsubmit="event.preventDefault(); handleQuickTrack();">
-            <input type="text" id="quickTrackInput" class="form-control form-control-lg bg-white" placeholder="Enter Request ID (e.g. AQ-84920)" required>
-            <button type="submit" class="btn btn-dark btn-lg px-4 text-nowrap">
-              Track Now
-            </button>
-          </form>
-          <div class="mt-2 text-white-50 small">
-            <span>Try demo IDs: </span>
-            <a href="javascript:void(0)" onclick="testDemoTrack('AQ-84920')" class="text-white text-decoration-underline me-2">AQ-84920 (In Progress)</a>
-            <a href="javascript:void(0)" onclick="testDemoTrack('AQ-71204')" class="text-white text-decoration-underline me-2">AQ-71204 (Completed)</a>
-            <a href="javascript:void(0)" onclick="testDemoTrack('AQ-93451')" class="text-white text-decoration-underline">AQ-93451 (Requested)</a>
+          <!-- Guest Track Prompt -->
+          <div class="guest-only text-md-end">
+            <a href="login.html?redirect=track.html" class="btn btn-light text-primary btn-lg px-4 fw-bold">
+              <i class="bi bi-box-arrow-in-right me-1"></i> Log In to Track Your Service
+            </a>
+          </div>
+
+          <!-- Authenticated Tracker Form -->
+          <div class="auth-only" style="display: none;">
+            <form class="d-flex gap-2" onsubmit="event.preventDefault(); handleQuickTrack();">
+              <input type="text" id="quickTrackInput" class="form-control form-control-lg bg-white" placeholder="Enter Request ID (e.g. AQ-84920)" required>
+              <button type="submit" class="btn btn-dark btn-lg px-4 text-nowrap">
+                Track Now
+              </button>
+            </form>
+            <div class="mt-2 text-white-50 small">
+              <span>Try demo IDs: </span>
+              <a href="javascript:void(0)" onclick="testDemoTrack('AQ-84920')" class="text-white text-decoration-underline me-2">AQ-84920 (In Progress)</a>
+              <a href="javascript:void(0)" onclick="testDemoTrack('AQ-71204')" class="text-white text-decoration-underline me-2">AQ-71204 (Completed)</a>
+              <a href="javascript:void(0)" onclick="testDemoTrack('AQ-93451')" class="text-white text-decoration-underline">AQ-93451 (Requested)</a>
+            </div>
           </div>
         </div>
       </div>
@@ -667,6 +708,8 @@
 
     // Quick Book Modal Trigger
     function openQuickBookModal(serviceId) {
+      if (!checkAuthBeforeBooking(serviceId)) return;
+
       const service = AQUA_SERVICES.find(s => s.id === serviceId) || AQUA_SERVICES[0];
       document.getElementById("modalServiceId").value = service.id;
       document.getElementById("modalServiceName").value = service.name;
@@ -751,12 +794,13 @@
     // Quick track handler
     function handleQuickTrack() {
       const input = document.getElementById("quickTrackInput").value;
-      if (input) {
-        window.location.href = `track.html?req=${encodeURIComponent(input.trim())}`;
-      }
+      if (!input) return;
+      if (!checkAuthBeforeTracking(input)) return;
+      window.location.href = `track.html?req=${encodeURIComponent(input.trim())}`;
     }
 
     function testDemoTrack(id) {
+      if (!checkAuthBeforeTracking(id)) return;
       window.location.href = `track.html?req=${encodeURIComponent(id)}`;
     }
   </script>

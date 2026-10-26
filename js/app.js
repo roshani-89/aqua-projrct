@@ -589,12 +589,21 @@ async function registerUserAsync(userData) {
   return safeUser;
 }
 
-// Universal Navbar Auth UI Updater
+// Universal Navbar & Page Access Auth UI Updater
 function updateNavbarAuthUI() {
+  const user = getCurrentUser();
+
+  // Update elements with .auth-only and .guest-only classes
+  document.querySelectorAll('.auth-only').forEach(el => {
+    el.style.display = user ? '' : 'none';
+  });
+  document.querySelectorAll('.guest-only').forEach(el => {
+    el.style.display = user ? 'none' : '';
+  });
+
   const authNavTarget = document.getElementById('navAuthContainer') || document.querySelector('.navbar .navbar-nav');
   if (!authNavTarget) return;
 
-  const user = getCurrentUser();
   const existingAuthItem = document.getElementById('navUserAuthItem');
   if (existingAuthItem) existingAuthItem.remove();
 
@@ -628,23 +637,46 @@ function updateNavbarAuthUI() {
   } else {
     authWrapper.innerHTML = `
       <div class="d-flex align-items-center gap-2">
-        <a href="login.html" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1">
-          <i class="bi bi-box-arrow-in-right"></i> Login
+        <a href="login.html" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1 px-3">
+          <i class="bi bi-box-arrow-in-right"></i> Log In
         </a>
-        <a href="register.html" class="btn btn-sm btn-outline-secondary d-none d-xl-inline-flex align-items-center gap-1">
+        <a href="register.html" class="btn btn-sm btn-aqua d-inline-flex align-items-center gap-1 px-3">
           <i class="bi bi-person-plus"></i> Register
         </a>
       </div>
     `;
   }
 
-  // Insert before the "Book Service" button
-  const bookBtnLi = authNavTarget.querySelector('li:last-child');
-  if (bookBtnLi) {
-    authNavTarget.insertBefore(authWrapper, bookBtnLi);
-  } else {
-    authNavTarget.appendChild(authWrapper);
+  // Insert at end or right location
+  authNavTarget.appendChild(authWrapper);
+}
+
+// Gatekeeper: Check if user is logged in before booking
+function checkAuthBeforeBooking(serviceId) {
+  const user = getCurrentUser();
+  if (!user) {
+    showToast('Please log in or register to book a water technician.', 'danger');
+    setTimeout(() => {
+      const redirect = serviceId ? `booking.html?service=${serviceId}` : 'booking.html';
+      window.location.href = `login.html?redirect=${encodeURIComponent(redirect)}`;
+    }, 700);
+    return false;
   }
+  return true;
+}
+
+// Gatekeeper: Check if user is logged in before tracking
+function checkAuthBeforeTracking(reqId) {
+  const user = getCurrentUser();
+  if (!user) {
+    showToast('Please log in or register to track service status.', 'danger');
+    setTimeout(() => {
+      const redirect = reqId ? `track.html?req=${encodeURIComponent(reqId)}` : 'track.html';
+      window.location.href = `login.html?redirect=${encodeURIComponent(redirect)}`;
+    }, 700);
+    return false;
+  }
+  return true;
 }
 
 // Auto Initialize
