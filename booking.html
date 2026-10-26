@@ -32,6 +32,11 @@
           <li class="nav-item"><a class="nav-link" href="track.html">Track Status</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#about">About Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          <li class="nav-item ms-lg-2" id="navAuthItem">
+            <a href="login.html" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1">
+              <i class="bi bi-box-arrow-in-right"></i> Login
+            </a>
+          </li>
           <li class="nav-item ms-lg-2">
             <a href="admin.html" class="btn btn-sm btn-outline-secondary d-none d-lg-inline-flex align-items-center gap-1" title="Admin Portal">
               <i class="bi bi-shield-lock"></i> Admin
@@ -349,6 +354,23 @@
       }
       if (preCity) {
         document.getElementById("bookCity").value = preCity;
+      }
+
+      // Auto-fill logged in user details if available
+      const currentUser = getCurrentUser();
+      if (currentUser) {
+        if (currentUser.name && !document.getElementById("bookCustomerName").value) {
+          document.getElementById("bookCustomerName").value = currentUser.name;
+        }
+        if (currentUser.phone && !document.getElementById("bookPhone").value) {
+          document.getElementById("bookPhone").value = currentUser.phone;
+        }
+        if (currentUser.email && !document.getElementById("bookEmail").value) {
+          document.getElementById("bookEmail").value = currentUser.email;
+        }
+        if (currentUser.address && !document.getElementById("bookAddress").value) {
+          document.getElementById("bookAddress").value = currentUser.address;
+        }
       }
 
       updatePriceSummary();

@@ -36,6 +36,11 @@
           <li class="nav-item"><a class="nav-link" href="track.html">Track Status</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          <li class="nav-item ms-lg-2" id="navAuthItem">
+            <a href="login.html" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1">
+              <i class="bi bi-box-arrow-in-right"></i> Login
+            </a>
+          </li>
           <li class="nav-item ms-lg-2">
             <a href="admin.html" class="btn btn-sm btn-outline-secondary d-none d-lg-inline-flex align-items-center gap-1" title="Admin Portal">
               <i class="bi bi-shield-lock"></i> Admin
@@ -574,6 +579,8 @@
             <li class="mb-2"><a href="services.html">Services & Pricing</a></li>
             <li class="mb-2"><a href="booking.html">Book Service</a></li>
             <li class="mb-2"><a href="track.html">Track Status</a></li>
+            <li class="mb-2"><a href="login.html">Customer Login</a></li>
+            <li class="mb-2"><a href="register.html">Register Account</a></li>
             <li class="mb-2"><a href="contact.html">Contact Us</a></li>
           </ul>
         </div>
@@ -666,6 +673,14 @@
       document.getElementById("modalServicePrice").value = service.price;
       document.getElementById("modalSelectedServiceName").innerText = service.name;
       document.getElementById("modalSelectedPrice").innerText = "₹" + service.price;
+
+      const user = getCurrentUser();
+      if (user) {
+        if (user.name) document.getElementById("modalCustomerName").value = user.name;
+        if (user.phone) document.getElementById("modalPhone").value = user.phone;
+        if (user.email) document.getElementById("modalEmail").value = user.email;
+        if (user.address) document.getElementById("modalAddress").value = user.address;
+      }
       
       const modal = new bootstrap.Modal(document.getElementById("quickBookingModal"));
       modal.show();

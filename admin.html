@@ -227,6 +227,16 @@
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
       await checkBackendHealth();
+      
+      const user = getCurrentUser();
+      if (!user || user.role !== 'admin') {
+        const proceed = confirm("Administrator Authentication:\nYou are not currently logged in as an Admin.\n\nClick 'OK' to Log In as Admin (admin@aquacare.com),\nor 'Cancel' to continue in guest demo preview mode.");
+        if (proceed) {
+          window.location.href = 'login.html?redirect=admin.html';
+          return;
+        }
+      }
+
       await renderAdminTable();
     });
 

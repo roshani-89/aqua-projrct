@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 // Ensure data folder exists
 const dataDir = path.join(__dirname, '..', 'data');
@@ -185,7 +186,41 @@ const SEED_BOOKINGS = [
   }
 ];
 
+function hashPassword(password) {
+  return crypto.createHash('sha256').update(password + '_aquacare_salt').digest('hex');
+}
+
+function seedUsers() {
+  const count = db.prepare("SELECT COUNT(*) as count FROM users").get().count;
+  if (count === 0) {
+    const insert = db.prepare(`
+      INSERT INTO users (name, email, phone, password_hash, address, role, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `);
+    const now = new Date().toISOString();
+    insert.run(
+      'AquaCare Administrator',
+      'admin@aquacare.com',
+      '18001234567',
+      hashPassword('admin123'),
+      'AquaCare HQ, Pune',
+      'admin',
+      now
+    );
+    insert.run(
+      'Rahul Sharma',
+      'rahul.sharma@example.com',
+      '9876543210',
+      hashPassword('customer123'),
+      'Flat 402, Sunshine Heights, MG Road, Pune',
+      'customer',
+      now
+    );
+  }
+}
+
 function seedInitialData() {
+  seedUsers();
   // Check if services already exist
   const serviceCount = db.prepare("SELECT COUNT(*) as count FROM services").get().count;
   if (serviceCount === 0) {
@@ -346,10 +381,85 @@ function getAllInquiries() {
   return db.prepare("SELECT * FROM inquiries ORDER BY datetime(created_at) DESC").all();
 }
 
+// User Authentication Methods
+function registerUser(data) {
+  const existing = db.prepare("SELECT id FROM users WHERE LOWER(email) = LOWER(?)").get(data.email.trim());
+  if (existing) {
+    throw new Error("An account with this email address already exists.");
+  }
+
+  const now = new Date().toISOString();
+  const insert = db.prepare(`
+    INSERT INTO users (name, email, phone, password_hash, address, role, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  insert.run(
+    data.name.trim(),
+    data.email.trim().toLowerCase(),
+    data.phone.trim(),
+    hashPassword(data.password),
+    data.address ? data.address.trim() : '',
+    data.role || 'customer',
+    now
+  );
+
+  return getUserByEmail(data.email.trim());
+}
+
+function authenticateUser(email, password) {
+  const user = db.prepare("SELECT * FROM users WHERE LOWER(email) = LOWER(?)").get(email.trim());
+  if (!user) {
+    return null;
+  }
+  const expectedHash = hashPassword(password);
+  if (user.password_hash !== expectedHash) {
+    return null;
+  }
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    address: user.address,
+    role: user.role,
+    createdAt: user.created_at
+  };
+}
+
+function getUserByEmail(email) {
+  const user = db.prepare("SELECT id, name, email, phone, address, role, created_at FROM users WHERE LOWER(email) = LOWER(?)").get(email.trim());
+  if (!user) return null;
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    address: user.address,
+    role: user.role,
+    createdAt: user.created_at
+  };
+}
+
+function getUserById(id) {
+  const user = db.prepare("SELECT id, name, email, phone, address, role, created_at FROM users WHERE id = ?").get(id);
+  if (!user) return null;
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    address: user.address,
+    role: user.role,
+    createdAt: user.created_at
+  };
+}
+
 // Reset data to seeds
 function resetToSeedData() {
   db.exec("DELETE FROM bookings");
   db.exec("DELETE FROM inquiries");
+  db.exec("DELETE FROM users");
   seedInitialData();
   return true;
 }
@@ -390,5 +500,9 @@ module.exports = {
   getStats,
   createInquiry,
   getAllInquiries,
-  resetToSeedData
+  resetToSeedData,
+  registerUser,
+  authenticateUser,
+  getUserByEmail,
+  getUserById
 };

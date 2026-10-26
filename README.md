@@ -18,6 +18,22 @@
 
 ---
 
+## 🔐 User Authentication & Roles
+
+The system supports full user registration, login, session management, and role-based permissions:
+
+| Role | Demo Email | Demo Password | Capabilities |
+|---|---|---|---|
+| **Customer** | `rahul.sharma@example.com` | `customer123` | Book services, track orders, auto-fill address, view profile |
+| **Administrator** | `admin@aquacare.com` | `admin123` | Access admin dashboard, update request statuses, assign field engineers, export CSV |
+
+### Auth API Endpoints:
+- `POST /api/auth/register` — Register new customer account (hashes password with salt)
+- `POST /api/auth/login` — Authenticate customer or administrator
+- `GET /api/auth/user/:id` — Retrieve user profile info
+
+---
+
 ## 🔌 RESTful API Documentation
 
 | Method | Endpoint | Description | Sample Payload / Params |

@@ -482,8 +482,174 @@ function showToast(message, type = "success") {
   });
 }
 
+// Authentication Client Methods
+function getCurrentUser() {
+  try {
+    const raw = localStorage.getItem('aquacare_current_user');
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function setCurrentUser(user) {
+  if (user) {
+    localStorage.setItem('aquacare_current_user', JSON.stringify(user));
+  } else {
+    localStorage.removeItem('aquacare_current_user');
+  }
+}
+
+function logoutUser() {
+  localStorage.removeItem('aquacare_current_user');
+  showToast('You have been logged out successfully.', 'info');
+  setTimeout(() => {
+    window.location.href = 'index.html';
+  }, 600);
+}
+
+async function loginUserAsync(email, password) {
+  if (backendAvailable) {
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Login failed');
+      }
+      setCurrentUser(data.user);
+      return data.user;
+    } catch (e) {
+      if (backendAvailable) throw e;
+    }
+  }
+
+  // Fallback Local Offline Login
+  if (email === 'admin@aquacare.com' && password === 'admin123') {
+    const admin = { id: 1, name: 'AquaCare Administrator', email, role: 'admin' };
+    setCurrentUser(admin);
+    return admin;
+  } else if (email === 'rahul.sharma@example.com' && password === 'customer123') {
+    const user = { id: 2, name: 'Rahul Sharma', email, phone: '9876543210', address: 'Flat 402, Sunshine Heights, Pune', role: 'customer' };
+    setCurrentUser(user);
+    return user;
+  } else {
+    // Check locally registered users
+    const localUsers = JSON.parse(localStorage.getItem('aquacare_users') || '[]');
+    const matched = localUsers.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+    if (matched) {
+      const safeUser = { id: matched.id, name: matched.name, email: matched.email, phone: matched.phone, address: matched.address, role: matched.role || 'customer' };
+      setCurrentUser(safeUser);
+      return safeUser;
+    }
+    throw new Error('Invalid email or password.');
+  }
+}
+
+async function registerUserAsync(userData) {
+  if (backendAvailable) {
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Registration failed');
+      }
+      setCurrentUser(data.user);
+      return data.user;
+    } catch (e) {
+      if (backendAvailable) throw e;
+    }
+  }
+
+  // Fallback Local Storage
+  const localUsers = JSON.parse(localStorage.getItem('aquacare_users') || '[]');
+  if (localUsers.some(u => u.email.toLowerCase() === userData.email.toLowerCase())) {
+    throw new Error('An account with this email address already exists.');
+  }
+  const newUser = {
+    id: Date.now(),
+    name: userData.name,
+    email: userData.email,
+    phone: userData.phone,
+    address: userData.address || '',
+    password: userData.password,
+    role: 'customer'
+  };
+  localUsers.push(newUser);
+  localStorage.setItem('aquacare_users', JSON.stringify(localUsers));
+  const safeUser = { id: newUser.id, name: newUser.name, email: newUser.email, phone: newUser.phone, address: newUser.address, role: newUser.role };
+  setCurrentUser(safeUser);
+  return safeUser;
+}
+
+// Universal Navbar Auth UI Updater
+function updateNavbarAuthUI() {
+  const authNavTarget = document.getElementById('navAuthContainer') || document.querySelector('.navbar .navbar-nav');
+  if (!authNavTarget) return;
+
+  const user = getCurrentUser();
+  const existingAuthItem = document.getElementById('navUserAuthItem');
+  if (existingAuthItem) existingAuthItem.remove();
+
+  const authWrapper = document.createElement('li');
+  authWrapper.id = 'navUserAuthItem';
+  authWrapper.className = 'nav-item ms-lg-2';
+
+  if (user) {
+    authWrapper.innerHTML = `
+      <div class="dropdown">
+        <button class="btn btn-sm btn-outline-primary dropdown-toggle d-flex align-items-center gap-2 py-2 px-3 rounded-3" type="button" data-bs-toggle="dropdown">
+          <i class="bi bi-person-circle fs-6"></i>
+          <span class="fw-semibold">${user.name.split(' ')[0]}</span>
+          <span class="badge ${user.role === 'admin' ? 'bg-danger' : 'bg-primary-subtle text-primary'} small ms-1">${user.role}</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow-md border-0 mt-2">
+          <li class="px-3 py-2 border-bottom">
+            <div class="fw-bold text-dark">${user.name}</div>
+            <div class="small text-muted text-truncate" style="max-width: 180px;">${user.email}</div>
+          </li>
+          ${user.role === 'admin' ? `
+            <li><a class="dropdown-item py-2" href="admin.html"><i class="bi bi-shield-lock text-primary me-2"></i>Admin Dashboard</a></li>
+          ` : ''}
+          <li><a class="dropdown-item py-2" href="track.html?req=${encodeURIComponent(user.phone || user.email)}"><i class="bi bi-clock-history text-primary me-2"></i>My Bookings</a></li>
+          <li><a class="dropdown-item py-2" href="booking.html"><i class="bi bi-calendar2-plus text-primary me-2"></i>Book New Service</a></li>
+          <li><hr class="dropdown-divider my-1"></li>
+          <li><button class="dropdown-item py-2 text-danger" onclick="logoutUser()"><i class="bi bi-box-arrow-right me-2"></i>Log Out</button></li>
+        </ul>
+      </div>
+    `;
+  } else {
+    authWrapper.innerHTML = `
+      <div class="d-flex align-items-center gap-2">
+        <a href="login.html" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1">
+          <i class="bi bi-box-arrow-in-right"></i> Login
+        </a>
+        <a href="register.html" class="btn btn-sm btn-outline-secondary d-none d-xl-inline-flex align-items-center gap-1">
+          <i class="bi bi-person-plus"></i> Register
+        </a>
+      </div>
+    `;
+  }
+
+  // Insert before the "Book Service" button
+  const bookBtnLi = authNavTarget.querySelector('li:last-child');
+  if (bookBtnLi) {
+    authNavTarget.insertBefore(authWrapper, bookBtnLi);
+  } else {
+    authNavTarget.appendChild(authWrapper);
+  }
+}
+
 // Auto Initialize
 document.addEventListener("DOMContentLoaded", async () => {
   initStorage();
   await checkBackendHealth();
+  updateNavbarAuthUI();
 });
