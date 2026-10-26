@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaCare | Online Water Service Booking Website</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <span class="brand-icon"><i class="bi bi-droplet-half"></i></span>
+        <span>Aqua<span class="text-primary">Care</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="services.html">Services & Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="track.html">Track Status</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          <li class="nav-item ms-lg-2">
+            <a href="admin.html" class="btn btn-sm btn-outline-secondary d-none d-lg-inline-flex align-items-center gap-1" title="Admin Portal">
+              <i class="bi bi-shield-lock"></i> Admin
+            </a>
+          </li>
+          <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+            <a href="booking.html" class="btn btn-aqua w-100">
+              <i class="bi bi-calendar2-check me-1"></i> Book Service
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <div class="hero-badge">
+            <i class="bi bi-patch-check-fill text-primary"></i> Certified Water Purifier Experts
+          </div>
+          <h1 class="hero-title">
+            Pure, Safe Water for Your Family <br>
+            <span class="text-gradient">Book Expert Water Services Online</span>
+          </h1>
+          <p class="hero-subtitle">
+            Say goodbye to unreliable local technicians. AquaCare connects you to certified RO purifier repair, genuine filter replacements, and deep tank cleaning with transparent pricing and live status tracking.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="booking.html" class="btn btn-aqua btn-lg px-4">
+              <i class="bi bi-calendar-check me-2"></i> Book a Service Now
+            </a>
+            <a href="track.html" class="btn btn-aqua-outline btn-lg px-4">
+              <i class="bi bi-geo-alt me-2"></i> Track Service Status
+            </a>
+          </div>
+
+          <!-- Quick Stats / Highlights -->
+          <div class="row mt-5 pt-3 border-top g-4">
+            <div class="col-4">
+              <h3 class="fw-bold mb-0 text-dark">50,000+</h3>
+              <p class="text-muted small mb-0">Services Completed</p>
+            </div>
+            <div class="col-4">
+              <h3 class="fw-bold mb-0 text-dark">90 Mins</h3>
+              <p class="text-muted small mb-0">Doorstep Response</p>
+            </div>
+            <div class="col-4">
+              <h3 class="fw-bold mb-0 text-dark">100%</h3>
+              <p class="text-muted small mb-0">Genuine Spare Parts</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <!-- Quick Booking Card inside Hero -->
+          <div class="floating-card">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h4 class="fw-bold mb-0 text-dark">Quick Service Booking</h4>
+              <span class="badge bg-primary-subtle text-primary fw-semibold px-2 py-1">Instant Slot</span>
+            </div>
+            <p class="text-muted small mb-4">Select your required water service and schedule technician visit in 60 seconds.</p>
+            
+            <form id="heroQuickBookForm">
+              <div class="mb-3">
+                <label class="form-label">Select Water Service</label>
+                <select class="form-select" id="quickServiceSelect" required>
+                  <option value="" selected disabled>Choose a service...</option>
+                  <option value="ro-repair" data-price="399">RO Water Purifier Repair (₹399)</option>
+                  <option value="filter-replacement" data-price="1299">Complete Filter Replacement (₹1,299)</option>
+                  <option value="ro-installation" data-price="549">RO Installation / Uninstallation (₹549)</option>
+                  <option value="tank-cleaning" data-price="899">Water Tank Deep Cleaning (₹899)</option>
+                  <option value="annual-maintenance" data-price="2499">AquaCare Annual Maintenance AMC (₹2,499)</option>
+                  <option value="water-quality-test" data-price="199">Water Quality & TDS Lab Testing (₹199)</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Your Mobile Number</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white text-muted">+91</span>
+                  <input type="tel" class="form-control" id="quickPhone" placeholder="Enter 10-digit number" pattern="[0-9]{10}" required>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label">City / Locality</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white text-muted"><i class="bi bi-geo-alt"></i></span>
+                  <input type="text" class="form-control" id="quickCity" placeholder="e.g. Pune, Bangalore, Mumbai..." required>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-aqua w-100 py-2">
+                Continue to Book Slot <i class="bi bi-arrow-right ms-1"></i>
+              </button>
+            </form>
+
+            <div class="text-center mt-3">
+              <span class="text-muted small">
+                <i class="bi bi-shield-check text-success"></i> Fixed Pricing & No Hidden Charges
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Quick Track Banner -->
+  <section class="py-4 bg-primary text-white">
+    <div class="container">
+      <div class="row align-items-center justify-content-between g-3">
+        <div class="col-md-6 col-lg-5">
+          <div class="d-flex align-items-center gap-3">
+            <div class="bg-white text-primary p-3 rounded-circle fs-3 shadow-sm">
+              <i class="bi bi-search"></i>
+            </div>
+            <div>
+              <h5 class="fw-bold mb-1">Already Booked a Service?</h5>
+              <p class="mb-0 text-white-50 small">Track your technician arrival & real-time request status.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <form class="d-flex gap-2" onsubmit="event.preventDefault(); handleQuickTrack();">
+            <input type="text" id="quickTrackInput" class="form-control form-control-lg bg-white" placeholder="Enter Request ID (e.g. AQ-84920)" required>
+            <button type="submit" class="btn btn-dark btn-lg px-4 text-nowrap">
+              Track Now
+            </button>
+          </form>
+          <div class="mt-2 text-white-50 small">
+            <span>Try demo IDs: </span>
+            <a href="javascript:void(0)" onclick="testDemoTrack('AQ-84920')" class="text-white text-decoration-underline me-2">AQ-84920 (In Progress)</a>
+            <a href="javascript:void(0)" onclick="testDemoTrack('AQ-71204')" class="text-white text-decoration-underline me-2">AQ-71204 (Completed)</a>
+            <a href="javascript:void(0)" onclick="testDemoTrack('AQ-93451')" class="text-white text-decoration-underline">AQ-93451 (Requested)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="py-5 bg-white">
+    <div class="container py-4">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <span class="text-primary fw-bold text-uppercase tracking-wider small">Simple 3-Step Process</span>
+        <h2 class="fw-bold mt-2">How AquaCare Works</h2>
+        <p class="text-muted">Effortless water services at your fingertips without any phone call hassles.</p>
+      </div>
+
+      <div class="row g-4 text-center">
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon-wrap mx-auto">
+              <i class="bi bi-card-checklist"></i>
+            </div>
+            <h4 class="fw-bold mb-3">1. Select Service & Time</h4>
+            <p class="text-muted mb-0">Browse our transparent catalog of RO repairs, filter changes, and tank cleaning. Pick a convenient date and time slot.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon-wrap mx-auto">
+              <i class="bi bi-person-badge"></i>
+            </div>
+            <h4 class="fw-bold mb-3">2. Verified Expert Arrives</h4>
+            <p class="text-muted mb-0">Our background-checked, trained technician reaches your doorstep on time with genuine company tools and filters.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon-wrap mx-auto">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <h4 class="fw-bold mb-3">3. Pure Water & Warranty</h4>
+            <p class="text-muted mb-0">Pay online or after service completion. Enjoy 30 days of hassle-free service warranty and certified pure drinking water.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services & Pricing Section -->
+  <section class="py-5 bg-light" id="services">
+    <div class="container py-4">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5">
+        <div>
+          <span class="text-primary fw-bold text-uppercase tracking-wider small">Our Offerings</span>
+          <h2 class="fw-bold mt-2 mb-0">Featured Water Services & Clear Pricing</h2>
+          <p class="text-muted mt-2 mb-0">Transparent pricing. No hidden fees. 100% genuine guaranteed replacement parts.</p>
+        </div>
+        <div class="mt-3 mt-md-0">
+          <a href="services.html" class="btn btn-aqua-outline">
+            View All Services <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="row g-4" id="homeServicesGrid">
+        <!-- Rendered dynamically by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose AquaCare / Problem & Solution Section -->
+  <section class="py-5 bg-white">
+    <div class="container py-4">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <span class="text-primary fw-bold text-uppercase tracking-wider small">Why Choose AquaCare</span>
+          <h2 class="fw-bold mt-2 mb-4">Solving Everyday Water Purifier Headaches with Digital Ease</h2>
+          <p class="text-muted mb-4">
+            Traditional water service methods involve endless phone calls, uncertain technician arrivals, non-standard pricing, and dubious counterfeit filters. AquaCare fixes this completely with a modern, accountable digital platform.
+          </p>
+
+          <div class="d-flex align-items-start gap-3 mb-3">
+            <div class="p-2 bg-primary-subtle text-primary rounded-3 fs-4">
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
+            <div>
+              <h5 class="fw-bold mb-1">Standardized & Upfront Pricing</h5>
+              <p class="text-muted small mb-0">Know the exact cost before the technician visits. No last-minute surprises or overcharging.</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start gap-3 mb-3">
+            <div class="p-2 bg-primary-subtle text-primary rounded-3 fs-4">
+              <i class="bi bi-patch-check-fill"></i>
+            </div>
+            <div>
+              <h5 class="fw-bold mb-1">Original OEM Filters & Membranes</h5>
+              <p class="text-muted small mb-0">We use high-grade Dow Filmtec, Kent, Aquaguard and NSF certified RO membranes and carbon blocks.</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start gap-3">
+            <div class="p-2 bg-primary-subtle text-primary rounded-3 fs-4">
+              <i class="bi bi-broadcast"></i>
+            </div>
+            <div>
+              <h5 class="fw-bold mb-1">Live Online Request Tracking</h5>
+              <p class="text-muted small mb-0">Track your booking status step-by-step from assignment to doorstep arrival and completion.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80" class="img-fluid" alt="Technician Servicing Water Purifier">
+            <div class="card-body p-4 bg-white">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <h6 class="fw-bold text-dark mb-1">Doorstep Service in 45+ Cities</h6>
+                  <p class="text-muted small mb-0">Over 350+ certified water technicians available daily.</p>
+                </div>
+                <span class="badge bg-success-subtle text-success fs-6 py-2 px-3 fw-semibold">
+                  <i class="bi bi-star-fill text-warning me-1"></i> 4.9 / 5 Rating
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section class="py-5 bg-light" id="about">
+    <div class="container py-4">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <span class="text-primary fw-bold text-uppercase tracking-wider small">About Us</span>
+        <h2 class="fw-bold mt-2">Dedicated to Providing Clean & Safe Drinking Water</h2>
+        <p class="text-muted">AquaCare was founded with a single mission: to empower families and businesses with seamless, reliable water purification and maintenance services.</p>
+      </div>
+
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-4">
+          <div class="feature-box h-100">
+            <i class="bi bi-bullseye fs-1 text-primary mb-3"></i>
+            <h5 class="fw-bold">Our Mission</h5>
+            <p class="text-muted small mb-0">
+              To eliminate water-borne health risks by offering fast, affordable, and certified RO repair and maintenance at every household's fingertips.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="feature-box h-100">
+            <i class="bi bi-eye fs-1 text-primary mb-3"></i>
+            <h5 class="fw-bold">Our Vision</h5>
+            <p class="text-muted small mb-0">
+              To become the most dependable and technologically advanced water-care network, setting benchmarks in service quality and customer happiness.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="feature-box h-100">
+            <i class="bi bi-heart-pulse fs-1 text-primary mb-3"></i>
+            <h5 class="fw-bold">Health First Commitment</h5>
+            <p class="text-muted small mb-0">
+              Every drop matters. We calibrate TDS, test alkalinity, and sanitize every internal chamber before declaring any job complete.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Reviews / Testimonials -->
+  <section class="py-5 bg-white">
+    <div class="container py-4">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <span class="text-primary fw-bold text-uppercase tracking-wider small">Happy Customers</span>
+        <h2 class="fw-bold mt-2">What Our Clients Say About AquaCare</h2>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="star-rating">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+            <p class="text-muted small mb-3">
+              "Booking on AquaCare was super fast. The technician arrived within an hour, replaced my Kent RO filters with original ones, and tested the TDS in front of me."
+            </p>
+            <div class="d-flex align-items-center gap-3">
+              <div class="bg-primary-subtle text-primary rounded-circle fw-bold p-2 px-3">RS</div>
+              <div>
+                <h6 class="fw-bold mb-0">Rohan Sengupta</h6>
+                <small class="text-muted">Kothrud, Pune</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="star-rating">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            </div>
+            <p class="text-muted small mb-3">
+              "The online status tracker is brilliant! I could see exactly when the technician was assigned and on his way. No constant phone calling needed."
+            </p>
+            <div class="d-flex align-items-center gap-3">
+              <div class="bg-primary-subtle text-primary rounded-circle fw-bold p-2 px-3">AM</div>
+              <div>
+                <h6 class="fw-bold mb-0">Ananya Mishra</h6>
+                <small class="text-muted">Indiranagar, Bangalore</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="star-rating">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+            </div>
+            <p class="text-muted small mb-3">
+              "Subscribed to their Annual Maintenance Contract (AMC). Total peace of mind. Whenever there is a drop in water speed, they fix it promptly."
+            </p>
+            <div class="d-flex align-items-center gap-3">
+              <div class="bg-primary-subtle text-primary rounded-circle fw-bold p-2 px-3">VK</div>
+              <div>
+                <h6 class="fw-bold mb-0">Vikas Kulkarni</h6>
+                <small class="text-muted">Andheri East, Mumbai</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Banner -->
+  <section class="py-5 water-gradient-bg text-white text-center">
+    <div class="container py-3">
+      <h2 class="fw-bold mb-3">Need Immediate Water Purifier Service?</h2>
+      <p class="lead mb-4 opacity-90">Book online today and get ₹100 OFF on your first filter replacement service.</p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="booking.html" class="btn btn-light btn-lg text-primary fw-bold px-4">
+          <i class="bi bi-calendar2-check me-2"></i> Book Online Now
+        </a>
+        <a href="tel:18001234567" class="btn btn-outline-light btn-lg px-4">
+          <i class="bi bi-telephone-outbound me-2"></i> Call Toll Free: 1800-123-4567
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Booking Modal (Invoked from service cards) -->
+  <div class="modal fade" id="quickBookingModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-bold" id="quickModalServiceTitle">Book Water Service</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="modalBookingForm" onsubmit="handleModalBookingSubmit(event)">
+          <div class="modal-body p-4">
+            <input type="hidden" id="modalServiceId">
+            <input type="hidden" id="modalServicePrice">
+            <input type="hidden" id="modalServiceName">
+
+            <div class="alert alert-info d-flex align-items-center justify-content-between mb-4">
+              <div>
+                <strong id="modalSelectedServiceName">Service</strong><br>
+                <small class="text-muted">Estimated standard price</small>
+              </div>
+              <div class="fs-4 fw-bold text-primary" id="modalSelectedPrice">₹0</div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Full Name *</label>
+                <input type="text" class="form-control" id="modalCustomerName" placeholder="e.g. Rahul Sharma" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Phone Number *</label>
+                <input type="tel" class="form-control" id="modalPhone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Purifier Brand / Model</label>
+                <input type="text" class="form-control" id="modalBrand" placeholder="e.g. Kent Grand, Aquaguard, Pureit, Livpure">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Preferred Date *</label>
+                <input type="date" class="form-control" id="modalDate" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Preferred Time Slot *</label>
+                <select class="form-select" id="modalTime" required>
+                  <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
+                  <option value="11:00 AM - 01:00 PM">11:00 AM - 01:00 PM</option>
+                  <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
+                  <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
+                  <option value="06:00 PM - 08:00 PM">06:00 PM - 08:00 PM</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email Address (Optional)</label>
+                <input type="email" class="form-control" id="modalEmail" placeholder="name@example.com">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Complete Service Address *</label>
+                <textarea class="form-control" id="modalAddress" rows="2" placeholder="House/Flat No., Building name, Street, Landmark, City, Pincode" required></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Describe the Issue / Special Instructions</label>
+                <textarea class="form-control" id="modalNotes" rows="2" placeholder="e.g. Water leaking, alarm beeping, filter dirty, low water flow..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-aqua px-4">
+              <i class="bi bi-check2-circle me-1"></i> Confirm & Submit Request
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Success Confirmation Modal -->
+  <div class="modal fade" id="bookingSuccessModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg text-center p-4">
+        <div class="modal-body">
+          <div class="text-success display-1 mb-3">
+            <i class="bi bi-check-circle-fill"></i>
+          </div>
+          <h3 class="fw-bold text-dark">Service Request Submitted!</h3>
+          <p class="text-muted">Your booking request has been registered in the AquaCare system.</p>
+
+          <div class="p-3 bg-light rounded-3 my-3 text-start">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="text-muted">Request ID:</span>
+              <strong class="text-primary fs-5" id="successRequestId">AQ-00000</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span class="text-muted">Service:</span>
+              <strong id="successServiceName">-</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-1">
+              <span class="text-muted">Estimated Amount:</span>
+              <strong class="text-success" id="successPrice">-</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span class="text-muted">Status:</span>
+              <span class="badge bg-warning text-dark">Requested</span>
+            </div>
+          </div>
+
+          <p class="small text-muted mb-4">
+            A confirmation has been saved. You can use your Request ID anytime to track technician assignment.
+          </p>
+
+          <div class="d-grid gap-2">
+            <a href="track.html" class="btn btn-aqua" id="successTrackBtn">
+              <i class="bi bi-geo-alt me-1"></i> View Live Tracking
+            </a>
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Close Window
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <a class="navbar-brand text-white mb-3 d-inline-block" href="index.html">
+            <span class="brand-icon"><i class="bi bi-droplet-half"></i></span>
+            <span>Aqua<span class="text-info">Care</span></span>
+          </a>
+          <p class="small text-muted mb-3">
+            AquaCare is India's premier online water service booking platform, providing fast, transparent, and trustworthy solutions for all residential and commercial water purifiers.
+          </p>
+          <div class="d-flex gap-3 fs-5 text-white-50">
+            <a href="#" class="text-white-50"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-white-50"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="text-white-50"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-white-50"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="index.html">Home</a></li>
+            <li class="mb-2"><a href="services.html">Services & Pricing</a></li>
+            <li class="mb-2"><a href="booking.html">Book Service</a></li>
+            <li class="mb-2"><a href="track.html">Track Status</a></li>
+            <li class="mb-2"><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <h5>Popular Services</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="services.html">RO Repair & Diagnosis</a></li>
+            <li class="mb-2"><a href="services.html">Filter Replacement</a></li>
+            <li class="mb-2"><a href="services.html">RO Installation / Relocation</a></li>
+            <li class="mb-2"><a href="services.html">Annual Maintenance (AMC)</a></li>
+            <li class="mb-2"><a href="services.html">Tank Deep Cleaning</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3">
+          <h5>Helpline & Support</h5>
+          <ul class="list-unstyled small text-muted">
+            <li class="mb-2"><i class="bi bi-telephone text-info me-2"></i> +91 1800-123-4567</li>
+            <li class="mb-2"><i class="bi bi-envelope text-info me-2"></i> support@aquacare.com</li>
+            <li class="mb-2"><i class="bi bi-clock text-info me-2"></i> Mon - Sun: 8:00 AM - 9:00 PM</li>
+            <li class="mb-2"><i class="bi bi-geo-alt text-info me-2"></i> 104, Tech Park, Shivajinagar, Pune</li>
+          </ul>
+          <a href="admin.html" class="badge bg-secondary text-decoration-none py-2 px-3">
+            <i class="bi bi-lock me-1"></i> Staff / Admin Portal
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-divider"></div>
+
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-muted">
+        <div>&copy; 2026 AquaCare - Online Water Service Booking Website. All Rights Reserved.</div>
+        <div class="mt-2 mt-md-0">
+          <a href="contact.html" class="me-3">Privacy Policy</a>
+          <a href="contact.html" class="me-3">Terms of Service</a>
+          <a href="track.html">Customer Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Populate Home Featured Services
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("homeServicesGrid");
+      if (grid) {
+        grid.innerHTML = AQUA_SERVICES.map(service => `
+          <div class="col-md-6 col-lg-4">
+            <div class="service-card">
+              ${service.tag ? `<span class="badge-popular">${service.tag}</span>` : ''}
+              <div class="service-image-holder" style="background-image: url('${service.image}')">
+                <span class="service-tag"><i class="bi bi-clock me-1"></i> ${service.duration}</span>
+              </div>
+              <div class="service-body">
+                <h5 class="fw-bold mb-2">${service.name}</h5>
+                <p class="text-muted small mb-3">${service.description}</p>
+                <ul class="feature-list mb-4">
+                  ${service.features.slice(0, 3).map(f => `<li><i class="bi bi-check2-circle"></i> ${f}</li>`).join('')}
+                </ul>
+                <div class="mt-auto d-flex align-items-center justify-content-between pt-3 border-top">
+                  <div>
+                    <span class="service-price">₹${service.price}</span>
+                    <span class="text-decoration-line-through text-muted small ms-1">₹${service.originalPrice}</span>
+                  </div>
+                  <button class="btn btn-sm btn-aqua" onclick="openQuickBookModal('${service.id}')">
+                    Book Now <i class="bi bi-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Set min date for date pickers to today
+      const today = new Date().toISOString().split('T')[0];
+      const modalDate = document.getElementById("modalDate");
+      if (modalDate) modalDate.min = today;
+    });
+
+    // Quick Book Modal Trigger
+    function openQuickBookModal(serviceId) {
+      const service = AQUA_SERVICES.find(s => s.id === serviceId) || AQUA_SERVICES[0];
+      document.getElementById("modalServiceId").value = service.id;
+      document.getElementById("modalServiceName").value = service.name;
+      document.getElementById("modalServicePrice").value = service.price;
+      document.getElementById("modalSelectedServiceName").innerText = service.name;
+      document.getElementById("modalSelectedPrice").innerText = "₹" + service.price;
+      
+      const modal = new bootstrap.Modal(document.getElementById("quickBookingModal"));
+      modal.show();
+    }
+
+    // Modal Form Submit
+    async function handleModalBookingSubmit(e) {
+      e.preventDefault();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
+      submitBtn.disabled = true;
+
+      const bookingData = {
+        serviceId: document.getElementById("modalServiceId").value,
+        serviceName: document.getElementById("modalServiceName").value,
+        price: document.getElementById("modalServicePrice").value,
+        customerName: document.getElementById("modalCustomerName").value,
+        phone: document.getElementById("modalPhone").value,
+        email: document.getElementById("modalEmail").value,
+        purifierBrand: document.getElementById("modalBrand").value,
+        preferredDate: document.getElementById("modalDate").value,
+        preferredTime: document.getElementById("modalTime").value,
+        address: document.getElementById("modalAddress").value,
+        notes: document.getElementById("modalNotes").value
+      };
+
+      try {
+        const newBooking = await createBookingAsync(bookingData);
+        
+        // Close booking modal
+        const bookModalEl = document.getElementById("quickBookingModal");
+        const bookModal = bootstrap.Modal.getInstance(bookModalEl);
+        if (bookModal) bookModal.hide();
+
+        // Show success modal
+        document.getElementById("successRequestId").innerText = newBooking.requestId;
+        document.getElementById("successServiceName").innerText = newBooking.serviceName;
+        document.getElementById("successPrice").innerText = "₹" + newBooking.price;
+        document.getElementById("successTrackBtn").href = `track.html?req=${newBooking.requestId}`;
+
+        const successModal = new bootstrap.Modal(document.getElementById("bookingSuccessModal"));
+        successModal.show();
+        e.target.reset();
+      } catch (err) {
+        showToast("Error booking service: " + err.message, "danger");
+      } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }
+    }
+
+    // Quick Book form in Hero
+    const heroForm = document.getElementById("heroQuickBookForm");
+    if (heroForm) {
+      heroForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const serviceSelect = document.getElementById("quickServiceSelect");
+        const serviceId = serviceSelect.value;
+        const phone = document.getElementById("quickPhone").value;
+        const city = document.getElementById("quickCity").value;
+
+        // Redirect to booking.html with pre-selected query params
+        window.location.href = `booking.html?service=${serviceId}&phone=${encodeURIComponent(phone)}&city=${encodeURIComponent(city)}`;
+      });
+    }
+
+    // Quick track handler
+    function handleQuickTrack() {
+      const input = document.getElementById("quickTrackInput").value;
+      if (input) {
+        window.location.href = `track.html?req=${encodeURIComponent(input.trim())}`;
+      }
+    }
+
+    function testDemoTrack(id) {
+      window.location.href = `track.html?req=${encodeURIComponent(id)}`;
+    }
+  </script>
+</body>
+</html>

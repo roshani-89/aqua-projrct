@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services & Pricing | AquaCare</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <span class="brand-icon"><i class="bi bi-droplet-half"></i></span>
+        <span>Aqua<span class="text-primary">Care</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="services.html">Services & Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="track.html">Track Status</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#about">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          <li class="nav-item ms-lg-2">
+            <a href="admin.html" class="btn btn-sm btn-outline-secondary d-none d-lg-inline-flex align-items-center gap-1" title="Admin Portal">
+              <i class="bi bi-shield-lock"></i> Admin
+            </a>
+          </li>
+          <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+            <a href="booking.html" class="btn btn-aqua w-100">
+              <i class="bi bi-calendar2-check me-1"></i> Book Service
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="water-gradient-subtle py-5 border-bottom">
+    <div class="container text-center py-4">
+      <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 mb-2">Clear & Standardized Rates</span>
+      <h1 class="fw-bold display-5 text-dark">Our Water Services & Pricing</h1>
+      <p class="text-muted max-w-700 mx-auto fs-5 mb-0">
+        Choose from our comprehensive range of RO water purifier repair, maintenance, sanitization, and annual contract plans.
+      </p>
+    </div>
+  </div>
+
+  <!-- Service Filter and Grid -->
+  <section class="py-5">
+    <div class="container">
+      <!-- Category Filter Pills -->
+      <div class="d-flex flex-wrap justify-content-center gap-2 mb-5" id="categoryFilterContainer">
+        <button class="filter-pill active" onclick="filterServices('all')">All Services</button>
+        <button class="filter-pill" onclick="filterServices('repair')">RO Repair & Diagnosis</button>
+        <button class="filter-pill" onclick="filterServices('maintenance')">Filter & AMC</button>
+        <button class="filter-pill" onclick="filterServices('installation')">Installation / Relocation</button>
+        <button class="filter-pill" onclick="filterServices('cleaning')">Tank Cleaning</button>
+        <button class="filter-pill" onclick="filterServices('inspection')">Water Lab Testing</button>
+      </div>
+
+      <!-- Service Cards Grid -->
+      <div class="row g-4" id="servicesGrid">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table: AquaCare vs Local Technicians -->
+  <section class="py-5 bg-white border-top border-bottom">
+    <div class="container py-3">
+      <div class="text-center mb-5">
+        <span class="text-primary fw-bold text-uppercase small">Transparent Standards</span>
+        <h2 class="fw-bold mt-2">Why AquaCare Beats Local Unorganized Services</h2>
+        <p class="text-muted">Compare the value, warranty, and safety we deliver on every single visit.</p>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle text-center bg-white shadow-sm rounded-4 overflow-hidden">
+          <thead class="table-primary text-dark">
+            <tr>
+              <th class="text-start py-3 fs-6">Service Parameter</th>
+              <th class="py-3 text-primary fs-6"><i class="bi bi-shield-check"></i> AquaCare Certified</th>
+              <th class="py-3 text-muted fs-6">Local Unverified Mechanics</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-start fw-semibold">Spare Parts Authenticity</td>
+              <td class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i> 100% Genuine Certified OEM</td>
+              <td class="text-danger"><i class="bi bi-x-circle-fill me-1"></i> Often Counterfeit / Low Quality</td>
+            </tr>
+            <tr>
+              <td class="text-start fw-semibold">Post-Service Warranty</td>
+              <td class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i> 30-Day Free Service Guarantee</td>
+              <td class="text-danger"><i class="bi bi-x-circle-fill me-1"></i> No Guarantee or Follow-up</td>
+            </tr>
+            <tr>
+              <td class="text-start fw-semibold">Pricing Transparency</td>
+              <td class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i> Fixed Rate Card Shown Online</td>
+              <td class="text-danger"><i class="bi bi-x-circle-fill me-1"></i> Arbitrary Charges on Spot</td>
+            </tr>
+            <tr>
+              <td class="text-start fw-semibold">Technician Background Verification</td>
+              <td class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i> Police & Skill Verified Professionals</td>
+              <td class="text-danger"><i class="bi bi-x-circle-fill me-1"></i> Untrained & Unverified</td>
+            </tr>
+            <tr>
+              <td class="text-start fw-semibold">Online Status Tracking</td>
+              <td class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i> Live Digital Request Tracker</td>
+              <td class="text-danger"><i class="bi bi-x-circle-fill me-1"></i> Repeated Calls & Waiting</td>
+            </tr>
+            <tr>
+              <td class="text-start fw-semibold">Water Purity & TDS Audit</td>
+              <td class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i> Included Free With Every Visit</td>
+              <td class="text-danger"><i class="bi bi-x-circle-fill me-1"></i> Not Performed</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Water Purifier FAQs -->
+  <section class="py-5 bg-light">
+    <div class="container py-3">
+      <div class="text-center mb-5">
+        <span class="text-primary fw-bold text-uppercase small">Knowledge Base</span>
+        <h2 class="fw-bold mt-2">Frequently Asked Questions</h2>
+        <p class="text-muted">Common questions about water purifiers and servicing.</p>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          <div class="accordion shadow-sm" id="serviceFaqAccordion">
+            <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                  How often should I replace the filters in my RO water purifier?
+                </button>
+              </h2>
+              <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#serviceFaqAccordion">
+                <div class="accordion-body text-muted">
+                  Sediment and pre-carbon filters should generally be replaced every 6 to 9 months, depending on the hardness and turbidity of your raw input water. The RO membrane typically lasts between 1.5 to 2 years if pre-filters are maintained on schedule.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                  What is an ideal TDS level for drinking water?
+                </button>
+              </h2>
+              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#serviceFaqAccordion">
+                <div class="accordion-body text-muted">
+                  According to WHO and Indian Standards (BIS 10500), an acceptable drinking water TDS range is between 100 to 300 PPM. A TDS lower than 80 PPM may lack essential natural minerals, while TDS above 500 PPM indicates excessive salinity or impurities.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                  Do you service all RO purifier brands (Kent, Aquaguard, Pureit, etc.)?
+                </button>
+              </h2>
+              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#serviceFaqAccordion">
+                <div class="accordion-body text-muted">
+                  Yes, our technicians are certified and equipped with compatible original parts for all major brands including Kent, Eureka Forbes Aquaguard, Pureit, Livpure, Blue Star, Havells, LG, and custom assembled systems.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                  What if the issue recurs after the technician leaves?
+                </button>
+              </h2>
+              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#serviceFaqAccordion">
+                <div class="accordion-body text-muted">
+                  Every AquaCare service includes a complimentary 30-day warranty. If you experience any recurring issue or leakage within 30 days, we send a technician for a free revisitation without any inspection fee.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <a class="navbar-brand text-white mb-3 d-inline-block" href="index.html">
+            <span class="brand-icon"><i class="bi bi-droplet-half"></i></span>
+            <span>Aqua<span class="text-info">Care</span></span>
+          </a>
+          <p class="small text-muted mb-3">
+            Providing safe, pure, and dependable water service booking across residences, commercial offices, and educational institutes.
+          </p>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="index.html">Home</a></li>
+            <li class="mb-2"><a href="services.html">Services & Pricing</a></li>
+            <li class="mb-2"><a href="booking.html">Book Service</a></li>
+            <li class="mb-2"><a href="track.html">Track Status</a></li>
+            <li class="mb-2"><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-3">
+          <h5>Services</h5>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="services.html">RO Repair</a></li>
+            <li class="mb-2"><a href="services.html">Filter Replacement</a></li>
+            <li class="mb-2"><a href="services.html">Water Tank Cleaning</a></li>
+            <li class="mb-2"><a href="services.html">Annual Maintenance AMC</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h5>Support</h5>
+          <p class="small text-muted mb-1"><i class="bi bi-telephone text-info me-2"></i> +91 1800-123-4567</p>
+          <p class="small text-muted mb-2"><i class="bi bi-envelope text-info me-2"></i> support@aquacare.com</p>
+          <a href="admin.html" class="badge bg-secondary text-decoration-none py-2 px-3">
+            <i class="bi bi-shield-lock me-1"></i> Admin Portal
+          </a>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="text-center small text-muted">
+        &copy; 2026 AquaCare - Online Water Service Booking Website.
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let activeFilter = 'all';
+
+    function renderServicesList() {
+      const grid = document.getElementById("servicesGrid");
+      const filtered = activeFilter === 'all' 
+        ? AQUA_SERVICES 
+        : AQUA_SERVICES.filter(s => s.category === activeFilter);
+
+      grid.innerHTML = filtered.map(service => `
+        <div class="col-md-6 col-lg-4">
+          <div class="service-card">
+            ${service.tag ? `<span class="badge-popular">${service.tag}</span>` : ''}
+            <div class="service-image-holder" style="background-image: url('${service.image}')">
+              <span class="service-tag"><i class="bi bi-clock me-1"></i> ${service.duration}</span>
+            </div>
+            <div class="service-body">
+              <h5 class="fw-bold mb-2">${service.name}</h5>
+              <p class="text-muted small mb-3">${service.description}</p>
+              
+              <ul class="feature-list mb-4">
+                ${service.features.map(f => `<li><i class="bi bi-check2-circle"></i> ${f}</li>`).join('')}
+              </ul>
+
+              <div class="mt-auto pt-3 border-top d-flex align-items-center justify-content-between">
+                <div>
+                  <span class="service-price">₹${service.price}</span>
+                  <span class="text-decoration-line-through text-muted small ms-1">₹${service.originalPrice}</span>
+                </div>
+                <a href="booking.html?service=${service.id}" class="btn btn-aqua">
+                  Book Service <i class="bi bi-calendar2-plus ms-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterServices(category) {
+      activeFilter = category;
+      document.querySelectorAll(".filter-pill").forEach(btn => {
+        btn.classList.remove("active");
+        if (btn.getAttribute("onclick").includes(`'${category}'`)) {
+          btn.classList.add("active");
+        }
+      });
+      renderServicesList();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderServicesList();
+    });
+  </script>
+</body>
+</html>

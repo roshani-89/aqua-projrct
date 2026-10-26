@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | AquaCare</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom shadow-sm">
+    <div class="container-fluid px-lg-4">
+      <a class="navbar-brand" href="index.html">
+        <span class="brand-icon"><i class="bi bi-droplet-half"></i></span>
+        <span>Aqua<span class="text-primary">Care</span></span>
+        <span class="badge bg-dark text-white ms-2 fs-6 fw-normal">Staff Admin</span>
+      </a>
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <a href="index.html" class="btn btn-sm btn-outline-primary">
+          <i class="bi bi-house me-1"></i> Customer View
+        </a>
+        <a href="track.html" class="btn btn-sm btn-outline-secondary">
+          <i class="bi bi-geo-alt me-1"></i> Tracker
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Container -->
+  <div class="container-fluid px-lg-4 py-4">
+    
+    <!-- Top Header & Metrics -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+      <div>
+        <h2 class="fw-bold text-dark mb-1">Service Operations Dashboard</h2>
+        <p class="text-muted small mb-0">Manage water service requests, assign field technicians, and update real-time fulfillment status.</p>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-success btn-sm" onclick="exportBookingsCSV()">
+          <i class="bi bi-file-earmark-spreadsheet me-1"></i> Export to CSV
+        </button>
+        <button class="btn btn-outline-danger btn-sm" onclick="resetSampleData()">
+          <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Sample Data
+        </button>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 bg-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span class="text-muted small fw-semibold">Total Requests</span>
+              <h3 class="fw-bold mb-0 text-dark mt-1" id="statTotalCount">0</h3>
+            </div>
+            <div class="bg-primary-subtle text-primary p-3 rounded-circle fs-4">
+              <i class="bi bi-clipboard2-data"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 bg-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span class="text-muted small fw-semibold">In Progress / Active</span>
+              <h3 class="fw-bold mb-0 text-primary mt-1" id="statActiveCount">0</h3>
+            </div>
+            <div class="bg-info-subtle text-info p-3 rounded-circle fs-4">
+              <i class="bi bi-tools"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 bg-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span class="text-muted small fw-semibold">Completed Services</span>
+              <h3 class="fw-bold mb-0 text-success mt-1" id="statCompletedCount">0</h3>
+            </div>
+            <div class="bg-success-subtle text-success p-3 rounded-circle fs-4">
+              <i class="bi bi-patch-check"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm rounded-3 p-3 bg-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span class="text-muted small fw-semibold">Total Revenue (₹)</span>
+              <h3 class="fw-bold mb-0 text-dark mt-1" id="statRevenue">₹0</h3>
+            </div>
+            <div class="bg-warning-subtle text-warning p-3 rounded-circle fs-4">
+              <i class="bi bi-currency-rupee"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter & Table Card -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+      <div class="card-header bg-white py-3 px-4 border-bottom">
+        <div class="row g-3 align-items-center">
+          <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
+              <input type="text" id="adminSearchInput" class="form-control border-start-0" placeholder="Search by ID, Customer Name, or Phone..." oninput="renderAdminTable()">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select" id="adminStatusFilter" onchange="renderAdminTable()">
+              <option value="All">All Statuses</option>
+              <option value="Requested">Requested (New)</option>
+              <option value="Assigned">Technician Assigned</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div class="col-md-5 text-md-end text-muted small">
+            Showing <strong id="visibleRowCount">0</strong> service requests
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light text-muted small text-uppercase">
+            <tr>
+              <th class="ps-4">Req ID</th>
+              <th>Customer</th>
+              <th>Service & Purifier</th>
+              <th>Preferred Schedule</th>
+              <th>Amount</th>
+              <th>Technician</th>
+              <th>Status</th>
+              <th class="text-end pe-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody">
+            <!-- Dynamic rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Status Update Modal -->
+  <div class="modal fade" id="statusUpdateModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title fw-bold">Update Request Status</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="statusUpdateForm" onsubmit="handleStatusUpdateSubmit(event)">
+          <div class="modal-body p-4">
+            <input type="hidden" id="editRequestId">
+            
+            <div class="mb-3">
+              <label class="form-label">Request ID</label>
+              <input type="text" class="form-control bg-light" id="displayEditReqId" readonly>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Service Status</label>
+              <select class="form-select" id="editStatusSelect" required>
+                <option value="Requested">Requested (New)</option>
+                <option value="Assigned">Technician Assigned</option>
+                <option value="In Progress">In Progress (At Customer Site)</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Assigned Technician</label>
+              <input type="text" class="form-control" id="editTechnicianName" placeholder="e.g. Amit Verma (+91 91234 56789)" required>
+            </div>
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Details View Modal -->
+  <div class="modal fade" id="viewDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-bold" id="viewDetailTitle">Booking Details</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4" id="viewDetailBody">
+          <!-- Populated by JS -->
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="#" id="viewDetailTrackBtn" class="btn btn-aqua" target="_blank">Open in Customer Tracker</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      await checkBackendHealth();
+      await renderAdminTable();
+    });
+
+    async function renderAdminTable() {
+      const searchQuery = (document.getElementById("adminSearchInput").value || "").trim();
+      const statusFilter = document.getElementById("adminStatusFilter").value;
+
+      // Fetch from Backend SQLite or LocalStorage
+      const [bookings, stats] = await Promise.all([
+        getBookingsAsync(searchQuery, statusFilter),
+        getStatsAsync()
+      ]);
+
+      // Calculate Stats
+      document.getElementById("statTotalCount").innerText = stats.total;
+      document.getElementById("statActiveCount").innerText = stats.active;
+      document.getElementById("statCompletedCount").innerText = stats.completed;
+      document.getElementById("statRevenue").innerText = "₹" + stats.revenue.toLocaleString('en-IN');
+
+      document.getElementById("visibleRowCount").innerText = bookings.length;
+
+      const tbody = document.getElementById("adminTableBody");
+      if (bookings.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-muted">No matching service requests found.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = bookings.map(b => {
+        let statusBadgeClass = "badge-status-requested";
+        if (b.status === "Assigned") statusBadgeClass = "badge-status-assigned";
+        if (b.status === "In Progress") statusBadgeClass = "badge-status-in-progress";
+        if (b.status === "Completed") statusBadgeClass = "badge-status-completed";
+        if (b.status === "Cancelled") statusBadgeClass = "badge-status-cancelled";
+
+        return `
+          <tr>
+            <td class="ps-4">
+              <strong class="text-primary">${b.requestId}</strong>
+            </td>
+            <td>
+              <div class="fw-semibold text-dark">${b.customerName}</div>
+              <div class="small text-muted">+91 ${b.phone}</div>
+            </td>
+            <td>
+              <div class="fw-semibold text-dark">${b.serviceName}</div>
+              <div class="small text-muted">${b.purifierBrand || 'RO Standard'}</div>
+            </td>
+            <td>
+              <div>${b.preferredDate}</div>
+              <div class="small text-muted">${b.preferredTime}</div>
+            </td>
+            <td class="fw-bold text-dark">₹${b.price}</td>
+            <td class="small text-muted">${b.technician || 'Pending'}</td>
+            <td>
+              <span class="badge ${statusBadgeClass}">${b.status}</span>
+            </td>
+            <td class="text-end pe-4">
+              <button class="btn btn-sm btn-outline-primary me-1" onclick="openEditStatusModal('${b.requestId}')" title="Change Status">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-info me-1" onclick="viewDetails('${b.requestId}')" title="View Full Details">
+                <i class="bi bi-eye"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete('${b.requestId}')" title="Delete">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function openEditStatusModal(requestId) {
+      const b = await findBookingAsync(requestId);
+      if (!b) return;
+
+      document.getElementById("editRequestId").value = b.requestId;
+      document.getElementById("displayEditReqId").value = b.requestId + " - " + b.customerName;
+      document.getElementById("editStatusSelect").value = b.status;
+      document.getElementById("editTechnicianName").value = b.technician && b.technician !== "Assigning Technician..." ? b.technician : "Amit Verma (+91 91234 56789)";
+
+      const modal = new bootstrap.Modal(document.getElementById("statusUpdateModal"));
+      modal.show();
+    }
+
+    async function handleStatusUpdateSubmit(e) {
+      e.preventDefault();
+      const reqId = document.getElementById("editRequestId").value;
+      const newStatus = document.getElementById("editStatusSelect").value;
+      const techName = document.getElementById("editTechnicianName").value;
+
+      await updateBookingStatusAsync(reqId, newStatus, techName);
+      
+      const modalEl = document.getElementById("statusUpdateModal");
+      const modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) modal.hide();
+
+      await renderAdminTable();
+      showToast(`Booking ${reqId} updated to "${newStatus}"!`, "success");
+    }
+
+    async function viewDetails(requestId) {
+      const b = await findBookingAsync(requestId);
+      if (!b) return;
+
+      document.getElementById("viewDetailTitle").innerText = `Request Details: ${b.requestId}`;
+      document.getElementById("viewDetailTrackBtn").href = `track.html?req=${b.requestId}`;
+
+      document.getElementById("viewDetailBody").innerHTML = `
+        <div class="row g-3">
+          <div class="col-md-6">
+            <p class="mb-1"><strong>Customer Name:</strong> ${b.customerName}</p>
+            <p class="mb-1"><strong>Phone Number:</strong> +91 ${b.phone}</p>
+            <p class="mb-1"><strong>Email:</strong> ${b.email || 'None'}</p>
+            <p class="mb-1"><strong>Address:</strong> ${b.address}</p>
+          </div>
+          <div class="col-md-6">
+            <p class="mb-1"><strong>Selected Service:</strong> ${b.serviceName}</p>
+            <p class="mb-1"><strong>Purifier Brand:</strong> ${b.purifierBrand || 'Standard'}</p>
+            <p class="mb-1"><strong>Scheduled Slot:</strong> ${b.preferredDate} (${b.preferredTime})</p>
+            <p class="mb-1"><strong>Current Status:</strong> <span class="badge bg-primary">${b.status}</span></p>
+          </div>
+          <div class="col-12">
+            <div class="p-3 bg-light rounded-3">
+              <strong>Customer Notes / Problem Description:</strong>
+              <p class="mb-0 text-muted fst-italic mt-1">${b.notes || 'No extra notes provided.'}</p>
+            </div>
+          </div>
+          <div class="col-12 text-end">
+            <span class="fs-5 fw-bold text-primary">Total Price: ₹${b.price}</span>
+          </div>
+        </div>
+      `;
+
+      const modal = new bootstrap.Modal(document.getElementById("viewDetailsModal"));
+      modal.show();
+    }
+
+    async function confirmDelete(requestId) {
+      if (confirm(`Are you sure you want to delete service request ${requestId}?`)) {
+        await deleteBookingAsync(requestId);
+        await renderAdminTable();
+        showToast(`Request ${requestId} deleted.`, "danger");
+      }
+    }
+
+    async function resetSampleData() {
+      if (confirm("Reset bookings back to the original demo sample requests?")) {
+        await resetDataAsync();
+        await renderAdminTable();
+        showToast("Sample data reset successfully!", "success");
+      }
+    }
+
+    async function exportBookingsCSV() {
+      const bookings = await getBookingsAsync();
+      if (!bookings.length) {
+        alert("No bookings to export.");
+        return;
+      }
+
+      let csv = "Request ID,Customer Name,Phone,Email,Service,Brand,Date,Time,Status,Technician,Price\n";
+      bookings.forEach(b => {
+        csv += `"${b.requestId}","${b.customerName}","${b.phone}","${b.email || ''}","${b.serviceName}","${b.purifierBrand || ''}","${b.preferredDate}","${b.preferredTime}","${b.status}","${b.technician || ''}","${b.price}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `aquacare_bookings_${new Date().toISOString().slice(0,10)}.csv`;
+      link.click();
+      showToast("Bookings exported to CSV!", "success");
+    }
+  </script>
+</body>
+</html>
